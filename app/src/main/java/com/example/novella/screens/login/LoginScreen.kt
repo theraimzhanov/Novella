@@ -33,14 +33,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.novella.R
 import com.example.novella.components.EmailInput
 import com.example.novella.components.NovellaLogo
 import com.example.novella.components.PasswordInput
+import com.example.novella.navigation.NovellaScreens
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController,
+                viewModel: LoginScreenViewModel= viewModel()
+) {
 
     val showLoginForm = rememberSaveable { mutableStateOf(true) }
 
@@ -55,10 +59,16 @@ fun LoginScreen(navController: NavController) {
                 isRegistered = false
             ) { email, password ->
                 //login account
+                viewModel.signInWithEmailAndPassword(email,password){
+                    navController.navigate(NovellaScreens.HomeScreen.name)
+                }
             }
             else {
                 UserForm(loading = false, isRegistered = true) { email, password ->
                     //Create account
+                    viewModel.createUserWithEmailAndPassword(email,password){
+                        navController.navigate(NovellaScreens.HomeScreen.name)
+                    }
                 }
             }
 
