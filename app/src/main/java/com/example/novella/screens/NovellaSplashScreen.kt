@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.novella.components.NovellaLogo
 import com.example.novella.navigation.NovellaScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
@@ -38,7 +39,12 @@ fun NovellaSplashScreen(navController: NavController){
         }
     ))
     delay(2000L)
-        navController.navigate(NovellaScreens.LoginScreen.name)
+       if (FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()){
+            navController.navigate(NovellaScreens.LoginScreen.name)
+        } else{
+            navController.navigate(NovellaScreens.HomeScreen.name)
+        }
+
     }
 
     Surface(modifier = Modifier.padding(15.dp)
