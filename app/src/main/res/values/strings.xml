@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Novella</string>
+    <string name="register">Please enter a valid email and password that is at least 6 characters</string>
+</resources>
