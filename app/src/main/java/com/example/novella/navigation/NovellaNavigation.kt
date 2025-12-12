@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.novella.screens.NovellaSplashScreen
 import com.example.novella.screens.home.HomeScreen
 import com.example.novella.screens.login.LoginScreen
+import com.example.novella.screens.stats.StatsScreen
 
 @Composable
 fun NovellaNavigation(){
@@ -23,6 +24,10 @@ fun NovellaNavigation(){
 
         composable(NovellaScreens.LoginScreen.name){
             LoginScreen(navController=navController)
+        }
+
+        composable(NovellaScreens.StatsScreen.name){
+            StatsScreen(navController=navController)
         }
     }
 }
