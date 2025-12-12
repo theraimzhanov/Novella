@@ -5,3 +5,13 @@ plugins {
     alias(libs.plugins.hilt) apply false
     id("com.google.gms.google-services") version "4.4.4" apply false
 }
+
+allprojects {
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.kotlin") {
+                useVersion("1.9.23")
+            }
+        }
+    }
+}
