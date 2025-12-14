@@ -1,12 +1,15 @@
 package com.example.novella.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.novella.screens.NovellaSplashScreen
 import com.example.novella.screens.home.HomeScreen
 import com.example.novella.screens.login.LoginScreen
+import com.example.novella.screens.search.SearchScreen
+import com.example.novella.screens.search.SearchViewModel
 import com.example.novella.screens.stats.StatsScreen
 
 @Composable
@@ -28,6 +31,10 @@ fun NovellaNavigation(){
 
         composable(NovellaScreens.StatsScreen.name){
             StatsScreen(navController=navController)
+        }
+        composable(NovellaScreens.SearchScreen.name){
+            val viewModel= hiltViewModel<SearchViewModel>()
+            SearchScreen(navController=navController,viewModel)
         }
     }
 }

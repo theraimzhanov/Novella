@@ -1,5 +1,6 @@
 package com.example.novella.components
 
+import android.R.attr.contentDescription
 import android.annotation.SuppressLint
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -173,8 +175,10 @@ fun TitleSection(
 @Composable
 fun NovellaAppBar(
     title: String,
+    icon: ImageVector?=null,
     showProfile: Boolean = true,
-    navController: NavController
+    navController: NavController,
+    onBackArrowClicked:()-> Unit={}
 ) {
     TopAppBar(
         title = {
@@ -187,6 +191,14 @@ fun NovellaAppBar(
                             .clip(RoundedCornerShape(12.dp))
                             .scale(0.95f)
                     )
+                }
+                if (icon!=null){
+                    Icon(imageVector =icon,
+                        contentDescription ="arrow back",
+                        tint = Color.Red.copy(alpha = 0.7f),
+                        modifier = Modifier.safeClickable{
+                            onBackArrowClicked.invoke()
+                        })
                 }
                 Text(
                     text = title,
@@ -203,10 +215,13 @@ fun NovellaAppBar(
                 FirebaseAuth.getInstance().signOut()
                 navController.navigate(NovellaScreens.LoginScreen.name)
             }) {
-                Icon(
-                    painter = painterResource(R.drawable.login_svgrepo_com),
-                    contentDescription = "Log out"
-                )
+                if (showProfile) Row(){
+                    Icon(
+                        painter = painterResource(R.drawable.login_svgrepo_com),
+                        contentDescription = "Log out"
+                    )
+                } else Box(){}
+
             }
         },
         colors = TopAppBarDefaults.mediumTopAppBarColors(

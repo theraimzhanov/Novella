@@ -37,7 +37,9 @@ fun HomeScreen(navController: NavController) {
             )
         },
         floatingActionButton = {
-            FABContent { }
+            FABContent {
+                navController.navigate(NovellaScreens.SearchScreen.name)
+            }
         }
     ) { padding ->
         Surface(
