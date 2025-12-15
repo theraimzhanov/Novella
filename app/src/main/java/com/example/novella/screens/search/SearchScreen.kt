@@ -1,6 +1,8 @@
 package com.example.novella.screens.search
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -80,9 +82,10 @@ fun SearchScreen(navController: NavController,
 fun BookList(navController: NavController,viewModel: SearchViewModel=hiltViewModel()) {
     val listOfBooks = viewModel.list
     if (viewModel.isLoading){
-        LinearProgressIndicator(
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+LinearProgressIndicator()
+                Text("Loading...")
+        }
     } else{
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -100,7 +103,10 @@ fun BookList(navController: NavController,viewModel: SearchViewModel=hiltViewMod
 fun BookRow(book: Item, navController: NavController) {
     Card(
         modifier = Modifier
-            .safeClickable {}
+            .safeClickable {
+                Log.d("CLL", "${book.toString()}")
+                navController.navigate(NovellaScreens.DetailScreen.name + "/${book.id}")
+            }
             .fillMaxWidth()
             .height(100.dp)
             .padding(3.dp),
@@ -119,8 +125,10 @@ fun BookRow(book: Item, navController: NavController) {
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "book image",
-                modifier = Modifier.width(100.dp)
-                    .fillMaxHeight().padding(end = 4.dp)
+                modifier = Modifier
+                    .width(100.dp)
+                    .fillMaxHeight()
+                    .padding(end = 4.dp)
             )
            /* Image(painter = rememberImagePainter(data = book.volumeInfo.imageLinks.thumbnail),
                 contentDescription = "book image",
